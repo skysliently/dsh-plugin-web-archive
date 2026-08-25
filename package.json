@@ -1,0 +1,40 @@
+{
+  "name": "dsh-plugin-web-archive",
+  "version": "0.1.0",
+  "description": "DSH plugin + skill: archive any web page into a Tolaria vault (raw HTML, local images, offline snapshot, verbatim Markdown, web-archive tagged note). Not WeChat-specific - WeChat is just one adapter.",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": {
+      "default": "./index.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "skill/",
+    "README.md",
+    "LICENSE",
+    "docs/ARCHITECTURE.md"
+  ],
+  "scripts": {
+    "test": "node tests/run-archive.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "skill",
+    "web-archive",
+    "webpage",
+    "tolaria",
+    "markdown",
+    "cordis"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": ">=0.1.0"
+  }
+}
