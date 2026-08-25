@@ -127,9 +127,9 @@ export async function runArchive(args, signal) {
   };
 }
 
-export async function apply(ctx) {
+export async function apply(ctx, config = {}) {
   const { defineTool } = await import("@deepseek-ai/dsh-tools");
-  const defaultVault = ctx.config?.vaultPath || process.env.DSH_WEB_ARCHIVE_VAULT || "";
+  const defaultVault = config?.vaultPath || process.env.DSH_WEB_ARCHIVE_VAULT || "";
   ctx.tools.register(defineTool({
     name: "web_archive",
     description,
