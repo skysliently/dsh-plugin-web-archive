@@ -15,6 +15,8 @@ URL → ①read (UA direct fetch; JS-only/anti-bot → browser fallback)
 Deterministic work (fetch / parse / download / transcribe / verify) is script-driven; semantic work (tags, summary, key facts) is done by the model in conversation — so the plugin stays site-agnostic and note quality follows the user's instructions.
 
 > **New here? Start with [QUICKSTART.md](QUICKSTART.md)** — 30-second setup, copy-paste commands, smoke test and troubleshooting.
+>
+> **Verification status:** installed into a real dsh profile (pnpm file-install + `cordis.patch.yml` insert) and integration-verified against the runtime's own `@deepseek-ai/dsh-tools`: `apply` registers `web_archive`, the schema validates, `execute` produces note + raw/snapshot/article/meta artifacts, `output.render` works. Remaining: boot-time activation check (restart `dsh web`, confirm the tool in the catalog and call it once in a live session).
 
 ## Install
 
