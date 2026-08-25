@@ -14,6 +14,8 @@ URL → ①read (UA direct fetch; JS-only/anti-bot → browser fallback)
 
 Deterministic work (fetch / parse / download / transcribe / verify) is script-driven; semantic work (tags, summary, key facts) is done by the model in conversation — so the plugin stays site-agnostic and note quality follows the user's instructions.
 
+> **New here? Start with [QUICKSTART.md](QUICKSTART.md)** — 30-second setup, copy-paste commands, smoke test and troubleshooting.
+
 ## Install
 
 Requires: Node ≥ 20, `python3` + `lxml` (`python3 -m pip install lxml`).
