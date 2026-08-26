@@ -6,8 +6,10 @@ Read a web page, faithfully save it (raw HTML + images + self-contained snapshot
 transcribe the main content verbatim into Markdown, and emit meta.json + a JSON report.
 
 Usage:
-  python3 archive_page.py <url> <vault> [--out-name <base>]
-  python3 archive_page.py --from-file <rendered.html> <vault> <url> [--out-name <base>]
+  python3 archive_page.py <url> <out_dir> [--out-name <base>]
+  python3 archive_page.py --from-file <rendered.html> <out_dir> <url> [--out-name <base>]
+
+Artifacts are written under <out_dir>/<base>/ (raw.html / <base>.html / article.md / meta.json / imgNN.*).
 
 Exit codes: 0 ok | 2 NEEDS_BROWSER (JS-only / anti-bot page) | 3 NO_CONTENT | 4 IO
 """
@@ -231,13 +233,13 @@ def main():
     from_file = None
     if args and args[0] == '--from-file':
         from_file = args[1]; url = args[3] if len(args) > 3 else ''
-        vault = args[2]
+        out_dir = args[2]
         rest = args[4:]
         raw = open(from_file, encoding='utf-8').read()
     else:
         if len(args) < 2:
             print(__doc__); sys.exit(1)
-        url, vault = args[0], args[1]
+        url, out_dir = args[0], args[1]
         raw = fetch(url)
         rest = args[2:]
     out_name = None
@@ -258,11 +260,10 @@ def main():
     DOMAIN_SLUGS = {'mp.weixin.qq.com': 'wechat'}
     host = urllib.parse.urlparse(url).netloc.replace('www.', '').lower()
     domain_slug = DOMAIN_SLUGS.get(host) or slugify(host.split('.')[0])
-    # fix past transposition for the known wechat token
     base = out_name or (date + '-' + domain_slug + '-' + token)
-    att = os.path.join(vault, 'attachments')
-    os.makedirs(att, exist_ok=True)
-    raw_path = os.path.join(att, base + '-raw.html')
+    out = os.path.join(out_dir, base)
+    os.makedirs(out, exist_ok=True)
+    raw_path = os.path.join(out, base + '-raw.html')
     if not os.path.exists(raw_path):
         open(raw_path, 'w', encoding='utf-8').write(raw)
     pairs = []
@@ -270,15 +271,15 @@ def main():
         q = u.split('?')
         ext = ('gif' if 'gif' in q[1] else ('jpeg' if 'jpeg' in q[1] else 'png')) if len(q) > 1 else 'png'
         fname = base + '-img%02d.' % i + ext
-        path = os.path.join(att, fname)
+        path = os.path.join(out, fname)
         if not os.path.exists(path):
             open(path, 'wb').write(http_get_bytes(u, referer=url))
-        pairs.append((u, fname))
-    html_path = os.path.join(att, base + '.html')
+        pairs.append((u, fname, path))
+    html_path = os.path.join(out, base + '.html')
     open(html_path, 'wb').write(self_contain_html(raw, pairs, m.get('title') or '', url))
     for i, pair in enumerate(pairs):
         text = text.replace('![{{IMG' + str(i) + '}}]', '![' + pair[1] + ']')
-    md_path = os.path.join(att, base + '-article.md')
+    md_path = os.path.join(out, base + '-article.md')
     open(md_path, 'w', encoding='utf-8').write(text)
     meta = dict(m)
     meta['date'] = date
@@ -286,9 +287,10 @@ def main():
     meta['word_count'] = len(re.sub(r'\s+', '', text))
     meta['image_count'] = len(pairs)
     meta['files'] = {'raw': raw_path, 'html': html_path, 'article_md': md_path,
-                     'images': [p[1] for p in pairs]}
-    meta['suggested_note'] = '2026/' + date + '-' + slugify(m.get('title') or base, 60) + '.md'
-    meta_path = os.path.join(att, base + '-meta.json')
+                     'images': [p[2] for p in pairs]}
+    meta['image_originals'] = [p[0] for p in pairs]
+    meta['suggested_note'] = date + '-' + slugify(m.get('title') or base, 60) + '.md'
+    meta_path = os.path.join(out, base + '-meta.json')
     open(meta_path, 'w', encoding='utf-8').write(json.dumps(meta, ensure_ascii=False, indent=2))
     print(json.dumps(meta, ensure_ascii=False, indent=2))
 

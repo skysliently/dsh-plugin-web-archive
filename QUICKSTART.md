@@ -46,11 +46,9 @@ pnpm add github:<owner>/dsh-plugin-web-archive   # 已发布 npm 时：pnpm add 
 - insert:
     - id: web-archive
       name: 'dsh-plugin-web-archive'
-      config:
-        vaultPath: /Users/you/tolaria
 ```
 
-模型即可一次调用 `web_archive`（url / vault / tags），返回 `needs_enrichment: true`，随后自动补充标签与摘要。
+模型即可调用 `web_archive`（url 必填；产品默认落 `web-archive/<base>/`，位于会话 cwd），返回 `needs_enrichment: true`；随后模型**通过 Tolaria MCP（`mcp__tolaria__create_note`）写入 vault**。前提：Tolaria MCP 已挂载进 dsh（`@deepseek-ai/dsh-mcp-client` + `mcp-tolaria` 条目）。
 
 ## 4. 还没推到 GitHub / npm 时怎么分享
 
@@ -64,6 +62,6 @@ cd dsh-plugin-web-archive && git archive --format=zip HEAD -o dsh-plugin-web-arc
 
 - **微信文章报 NEEDS_BROWSER / 环境异常**：属预期检测（反爬验证页）。skill 会提示用 agent-browser 渲染后 `--from-file` 续跑；先装 `agent-browser` skill 即可自动兜底。
 - **技能没出现在模型列表**：确认 `~/.agents/skills/web-page-archive/SKILL.md` 存在 + 重启 `dsh web`（watcher 热加载）。
-- **写入 vault 被拒绝**：vault 在会话工作区外时需更宽文件沙箱许可——走批准流程，不要绕过（skill 文档同样写明）。
+- **Tolaria MCP 未挂载**：写入 vault 必须走 `mcp__tolaria__*`（官方 mcp-client 条目）；没有 MCP 时 agent 应告知用户，而不是直接改 vault 文件。
 - **lxml 装不上**：macOS 系统 python 用 `pip3 install --user lxml`，或 `brew install python@3.11` 后再 pip。
 - **只看图/只存文**：快照已本地化全部配图；原图 CDN 地址保留在 `data-original-src` 与笔记元数据中。

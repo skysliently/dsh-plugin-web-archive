@@ -6,17 +6,17 @@
 
 ```
 URL → ①read (UA direct fetch; JS-only/anti-bot → browser fallback)
-     → ②faithful save (raw HTML + images + offline self-contained snapshot)
+     → ②faithful save into the agent's current working directory (raw HTML + images + offline self-contained snapshot)
      → ③verbatim Markdown (main-content extraction, zero rewrites)
      → ④semantic layer by the model (tags / summary / key facts)
-     → ⑤Tolaria note (frontmatter + summary + full text) + attachments/
+     → ⑤write the note into Tolaria via the mounted Tolaria MCP (mcp__tolaria__*)
 ```
 
 Deterministic work (fetch / parse / download / transcribe / verify) is script-driven; semantic work (tags, summary, key facts) is done by the model in conversation — so the plugin stays site-agnostic and note quality follows the user's instructions.
 
 > **New here? Start with [QUICKSTART.md](QUICKSTART.md)** — 30-second setup, copy-paste commands, smoke test and troubleshooting.
 >
-> **Verification status:** installed into a real dsh profile (pnpm file-install + `cordis.patch.yml` insert) and integration-verified against the runtime's own `@deepseek-ai/dsh-tools`: `apply` registers `web_archive`, the schema validates, `execute` produces note + raw/snapshot/article/meta artifacts, `output.render` works. Remaining: boot-time activation check (restart `dsh web`, confirm the tool in the catalog and call it once in a live session).
+> **Verification status:** installed into real dsh profiles (web + headless, pnpm file-install + `cordis.patch.yml` insert), integration-verified against the runtime's own `@deepseek-ai/dsh-tools`, and a real headless dsh run archived a WeChat article into the session cwd with the `web_archive` tool. Vault writes go through the Tolaria MCP (`mcp__tolaria__*`), which must be mounted into dsh.
 
 ## Install
 
@@ -45,22 +45,20 @@ Then append to `cordis.patch.yml`:
 - insert:
     - id: web-archive
       name: 'dsh-plugin-web-archive'
-      config:
-        vaultPath: /Users/you/tolaria
 ```
 
 Restart `dsh web`. The model now has the `web_archive` tool:
 
 ```json
-{"url": "https://mp.weixin.qq.com/s/...", "tags": ["创业", "AI harness"]}
+{"url": "https://mp.weixin.qq.com/s/..."}
 ```
 
-The tool archives everything and writes the note scaffold; it returns `needs_enrichment: true`, after which the model adds the semantic layer (tags/summary/关键信息) by editing the note.
+The tool saves the archive product into the session working directory (`web-archive/<base>/` by default) and returns the artifact paths with `needs_enrichment: true`; the model then writes the web-archive note into the knowledge base **through the Tolaria MCP** (`mcp__tolaria__create_note`), which must be mounted into dsh (official `dsh-mcp-client` entry — see `cordis.patch.yml` `mcp-tolaria`).
 
 ## Usage notes
 
 - **JS-only / anti-bot pages**: the script exits with `NEEDS_BROWSER`; render with agent-browser (`npx agent-browser open <url>`, eval `document.documentElement.outerHTML`) and retry with `--from-file <rendered.html>` (skill route) — documented in the skill.
-- **Vault permissions**: vaults outside the session workspace may require wider file-sandbox permission; the skill documents the approval flow rather than working around denials.
+- **Tolaria MCP required for vault writes**: writing into Tolaria goes through `mcp__tolaria__*`, mounted into dsh via `@deepseek-ai/dsh-mcp-client` (profile `cordis.patch.yml` `mcp-tolaria` entry). The tool never touches the vault directly.
 - **Honesty**: the original text is preserved verbatim; partial access (paywalls) is marked `access: partial`.
 
 ## Contents
