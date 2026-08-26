@@ -36,9 +36,10 @@ python3 dsh-plugin-web-archive/skill/web-page-archive/scripts/archive_page.py ht
 ## 3. 工具插件路线（可选：一行调用）
 
 ```bash
-cd ~/.dsh/profiles/web
-pnpm add github:<owner>/dsh-plugin-web-archive   # 已发布 npm 时：pnpm add dsh-plugin-web-archive
+dsh plugin --profile web add github:<owner>/dsh-plugin-web-archive   # 已发布 npm 时：dsh plugin --profile web add dsh-plugin-web-archive
 ```
+
+（官方入口 = 在 profile 目录转发 pnpm；需 pnpm 在 PATH：`npm i -g pnpm`。）
 
 `cordis.patch.yml` 追加后重启 `dsh web`：
 

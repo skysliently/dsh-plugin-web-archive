@@ -33,10 +33,10 @@ The filesystem watcher hot-reloads skills (also `~/.dsh/skills`, `<projectRoot>/
 
 ### Path B — Tool plugin (one-call atomic)
 
-In your dsh profile directory (e.g. `~/.dsh/profiles/web`):
+Requires pnpm on PATH (`npm i -g pnpm`). Use the official dsh plugin command (it forwards pnpm into the profile directory):
 
 ```bash
-pnpm add file:/path/to/dsh-plugin-web-archive
+dsh plugin --profile web add file:/path/to/dsh-plugin-web-archive
 ```
 
 Then append to `cordis.patch.yml`:
