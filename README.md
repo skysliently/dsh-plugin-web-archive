@@ -2,7 +2,7 @@
 
 > **中文文档:** [README.zh.md](README.zh.md) · **English:** shareable DSH plugin
 
-> Archive **any web page** into a **Tolaria vault** as a faithful local web archive — raw HTML snapshot, downloaded images, offline self-contained snapshot, verbatim Markdown transcription, and a **web-archive tagged note** readable by **humans and agents alike**. WeChat 公众号 articles are just the first adapter, not the scope.
+> **Purpose: build your own document library.** Archive **any web page** into a **Tolaria vault** as a faithful local web archive — raw HTML snapshot, downloaded images, offline self-contained snapshot, verbatim Markdown transcription, and a **web-archive tagged note** readable by **humans and agents alike** — so content you read is stored faithfully **locally** and never vanishes with a dead link. **Tolaria is AI-model friendly by design**: plain Markdown with structured frontmatter that agents can parse, search and manage — aligned with where AI-driven knowledge management is heading.
 
 ## What it does
 

@@ -1,7 +1,7 @@
 # dsh-plugin-web-archive（中文文档）
 
 > **项目定位：忠实、完整地把网页内容本地存储，沉淀形成属于自己的文档库。** 把任意网页完整存档——原始 HTML + 本地图片 + 离线自包含快照 + 逐字 Markdown——再通过 Tolaria MCP 把带 `web-archive` 标签的笔记写入知识库：读过的网页不再随链接失效而消失。
-> **Tolaria 对 AI 模型友好**：笔记是带结构化 frontmatter 的纯 Markdown，agent 可解析、可检索、可管理——符合「AI 模型管理文档」的发展趋势。微信公众号只是第一个站点适配器，不是适用范围。
+> **Tolaria 对 AI 模型友好**：笔记是带结构化 frontmatter 的纯 Markdown，agent 可解析、可检索、可管理——符合「AI 模型管理文档」的发展趋势。
 >
 > English: [README.md](README.md)
 
