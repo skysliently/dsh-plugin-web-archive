@@ -4,7 +4,9 @@
 
 ## 目标
 
-任意网页 → 在 **agent 当前工作目录**生成本地可信存档（raw HTML、全部配图、离线自包含快照、逐字 Markdown、meta.json），再由模型**通过已挂载的 Tolaria MCP**写入带 `web-archive` 标签、人/agent 双读的知识库笔记。微信只是适配器之一。
+任意网页 → 在 **agent 当前工作目录**生成本地可信存档（raw HTML、全部配图、离线自包含快照、逐字 Markdown、meta.json），再由模型**通过已挂载的 Tolaria MCP**写入带 `web-archive` 标签、人/agent 双读的知识库笔记。
+
+最终沉淀为**属于自己的文档库**：读过的网页被忠实本地存储、可长期复用；知识库采用**对 AI 模型友好**的形态（纯 Markdown + 结构化 frontmatter，agent 可解析/检索/管理），符合「AI 模型管理文档」的发展趋势。微信只是适配器之一。
 
 ## 官方分工
 

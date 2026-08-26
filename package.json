@@ -1,7 +1,7 @@
 {
   "name": "dsh-plugin-web-archive",
   "version": "0.2.0",
-  "description": "DSH plugin + skill: archive any web page into a Tolaria vault (raw HTML, local images, offline snapshot, verbatim Markdown, web-archive tagged note). Not WeChat-specific - WeChat is just one adapter.",
+  "description": "DSH plugin + skill: faithfully store any web page locally and build your own document library — raw HTML, local images, offline snapshot, verbatim Markdown, plus web-archive tagged notes in an AI-model-friendly Tolaria vault. Not WeChat-specific - WeChat is just one adapter.",
   "type": "module",
   "main": "index.js",
   "exports": {

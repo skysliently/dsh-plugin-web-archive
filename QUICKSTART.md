@@ -1,6 +1,6 @@
 # Quick Start — dsh-plugin-web-archive
 
-> 30 秒开始存档第一个网页。更完整文档见 `README.md` / `docs/ARCHITECTURE.md`。
+> 30 秒开始存档第一个网页——**忠实地把网页内容本地存储，沉淀成属于自己的文档库**（Tolaria 对 AI 模型友好，符合 AI 模型管理文档趋势）。更完整文档见 `README.md` / `docs/ARCHITECTURE.md`。
 
 ## 0. 前置条件 (Prerequisites)
 

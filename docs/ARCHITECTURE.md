@@ -4,7 +4,12 @@
 
 Any web page → local faithful archive **in the agent's current working directory**, plus a
 web-archive tagged Tolaria note written **through the mounted Tolaria MCP** — a dual-read
-(human + agent) knowledge-base entry. WeChat is only one adapter.
+(human + agent) knowledge-base entry.
+
+The result is **your own document library**: pages you read are stored faithfully and
+locally, reusable over time, in an **AI-model-friendly knowledge base** (plain Markdown +
+structured frontmatter that agents can parse, search and manage) — aligned with the trend
+of AI-driven document management. WeChat is only one adapter.
 
 ## Official split of responsibilities (per DSH conventions)
 
