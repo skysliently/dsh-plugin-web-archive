@@ -1,5 +1,7 @@
 # dsh-plugin-web-archive
 
+> **中文文档:** [README.zh.md](README.zh.md) · **English:** shareable DSH plugin
+
 > Archive **any web page** into a **Tolaria vault** as a faithful local web archive — raw HTML snapshot, downloaded images, offline self-contained snapshot, verbatim Markdown transcription, and a **web-archive tagged note** readable by **humans and agents alike**. WeChat 公众号 articles are just the first adapter, not the scope.
 
 ## What it does
